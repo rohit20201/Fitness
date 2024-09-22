@@ -19,7 +19,12 @@ use App\Http\Controllers\AuthController;
 
 Route::post('/student-register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    Route::post('/update-password', [AuthController::class, 'updatePassword']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 	Route::prefix("admin")->group(function(){
@@ -55,8 +60,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::post('update-web-information',[\App\Http\Controllers\Admin\HomeController::class,"updateWebInformation"]);
         Route::get('get-web-information',[\App\Http\Controllers\Admin\HomeController::class,"getWebInformation"]);
         
-
     });
+    
+    Route::get('/role-list', [AuthController::class, 'roleList']);
 });
 
 Route::post('/save-contact', [\App\Http\Controllers\HomeController::class, 'saveContact']);

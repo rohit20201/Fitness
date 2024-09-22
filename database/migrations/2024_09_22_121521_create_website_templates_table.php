@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('about_description')->nullable();
             $table->unsignedBigInteger('about_media_id')->default(0);
             $table->string('contact_email')->nullable();
-            $table->string('contact_phone')->nullable();
+            $table->string('contact_phone', 15)->nullable();
             $table->string('contact_location')->nullable();
             $table->text('terms_description')->nullable();
             $table->text('privacy_description')->nullable();
